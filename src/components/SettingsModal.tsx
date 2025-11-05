@@ -40,11 +40,12 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
     const storedModel = getStoredProviderModel(provider);
 
     setApiKey(storedKey);
-    setModel(storedModel);
+    // 저장된 모델이 있으면 그것을 사용, 없으면 기본 모델(gemini-2.5-flash) 사용
+    setModel(storedModel || metadata.defaultModel);
     setValidationStatus(storedKey ? 'valid' : 'idle');
     setAvailableModels([]);
     setModelError(null);
-  }, []);
+  }, [metadata.defaultModel]);
 
   useEffect(() => {
     if (isOpen) {
