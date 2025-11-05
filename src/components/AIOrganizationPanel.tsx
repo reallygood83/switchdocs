@@ -26,6 +26,8 @@ const organizationModes: OrganizationMode[] = [
   'observation-record',
   'meeting-minutes',
   'official-document',
+  // Custom mode
+  'custom',
 ];
 
 export function AIOrganizationPanel({

@@ -8,13 +8,16 @@ export type OrganizationMode =
   | 'lesson-plan'
   | 'observation-record'
   | 'meeting-minutes'
-  | 'official-document';
+  | 'official-document'
+  // Custom mode
+  | 'custom';
 
 export interface OrganizationOptions {
   mode: OrganizationMode;
   targetLanguage?: 'ko' | 'en';
   preserveFormatting?: boolean;
   temperature?: number;
+  customPrompt?: string; // For custom mode
 }
 
 export interface OrganizationResult {

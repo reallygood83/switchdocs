@@ -8,6 +8,7 @@ import { Toast } from './components/Toast';
 import { AIOrganizationPanel } from './components/AIOrganizationPanel';
 import { SettingsModal } from './components/SettingsModal';
 import { ComparisonView } from './components/ComparisonView';
+import { CustomPromptModal } from './components/CustomPromptModal';
 import { useMarkdownConverter } from './hooks/useMarkdownConverter';
 import { useContentOrganizer } from './hooks/useContentOrganizer';
 import { FileType } from './types/index';
@@ -29,6 +30,7 @@ function App() {
   const organizer = useContentOrganizer();
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isCustomPromptOpen, setIsCustomPromptOpen] = useState(false);
   const [provider, setProvider] = useState(getStoredProvider());
   const [hasApiKey, setHasApiKey] = useState(() => !!getStoredProviderApiKey(provider));
   const [providerLabel, setProviderLabel] = useState(() => getProviderMetadata(provider).label);
@@ -53,6 +55,12 @@ function App() {
   const handleOrganize = async (mode: OrganizationMode) => {
     if (!converter.result) return;
 
+    // If custom mode, open the prompt modal
+    if (mode === 'custom') {
+      setIsCustomPromptOpen(true);
+      return;
+    }
+
     try {
       await organizer.organize(converter.result.markdown, {
         mode,
@@ -60,6 +68,25 @@ function App() {
         temperature: 0.3,
       });
       setToast({ message: 'Successfully organized with AI!', type: 'success' });
+    } catch (error) {
+      setToast({
+        message: error instanceof Error ? error.message : 'AI organization failed',
+        type: 'error',
+      });
+    }
+  };
+
+  const handleCustomPromptSubmit = async (prompt: string) => {
+    if (!converter.result) return;
+
+    try {
+      await organizer.organize(converter.result.markdown, {
+        mode: 'custom',
+        customPrompt: prompt,
+        targetLanguage: 'en',
+        temperature: 0.3,
+      });
+      setToast({ message: 'Successfully organized with custom prompt!', type: 'success' });
     } catch (error) {
       setToast({
         message: error instanceof Error ? error.message : 'AI organization failed',
@@ -334,6 +361,13 @@ function App() {
       <SettingsModal
         isOpen={isSettingsOpen}
         onClose={handleSettingsClose}
+      />
+
+      {/* Custom Prompt Modal */}
+      <CustomPromptModal
+        isOpen={isCustomPromptOpen}
+        onClose={() => setIsCustomPromptOpen(false)}
+        onSubmit={handleCustomPromptSubmit}
       />
     </div>
   );

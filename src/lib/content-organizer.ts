@@ -39,6 +39,11 @@ export function generateOrganizationPrompt(
     'meeting-minutes': '당신은 회의록 작성 전문가입니다. 회의 내용을 구조화하여 안건, 논의사항, 결정사항, 향후 계획을 명확히 정리합니다.',
 
     'official-document': '당신은 공문서 작성 전문가입니다. 주어진 내용을 공식적인 공문서 형식으로 변환하며, 발신/수신, 제목, 내용, 첨부 등 표준 공문서 구조를 따릅니다.',
+
+    // Custom mode
+    'custom': isKorean
+      ? '당신은 콘텐츠 구조화 전문가입니다. 사용자가 제공한 지시사항에 따라 마크다운 문서를 정확하게 구조화하고 변환합니다.'
+      : 'You are a content organization expert. Structure and transform the markdown document according to the user\'s specific instructions.',
   };
 
   const userPrompts: Record<OrganizationMode, string> = {
@@ -99,6 +104,11 @@ export function generateOrganizationPrompt(
 - 첨부: [첨부 문서 목록]
 
 내용:\n\n${markdown}`,
+
+    // Custom mode user prompt
+    'custom': options.customPrompt
+      ? `${options.customPrompt}\n\n마크다운 문서:\n\n${markdown}`
+      : markdown,
   };
 
   return {
@@ -157,6 +167,7 @@ export function getModeName(mode: OrganizationMode, language: 'ko' | 'en' = 'en'
       'observation-record': '수업 관찰 기록',
       'meeting-minutes': '회의록',
       'official-document': '공문서',
+      'custom': '직접 입력',
     },
     en: {
       'restructure': 'Restructure',
@@ -169,6 +180,7 @@ export function getModeName(mode: OrganizationMode, language: 'ko' | 'en' = 'en'
       'observation-record': 'Observation Record',
       'meeting-minutes': 'Meeting Minutes',
       'official-document': 'Official Document',
+      'custom': 'Custom Input',
     },
   };
 
@@ -188,6 +200,7 @@ export function getModeDescription(mode: OrganizationMode, language: 'ko' | 'en'
       'observation-record': '수업 관찰 내용을 교수학습 개선에 활용할 수 있도록 체계적으로 정리합니다',
       'meeting-minutes': '회의 안건, 논의사항, 결정사항을 명확히 정리한 회의록을 작성합니다',
       'official-document': '발신/수신, 제목, 내용을 포함한 표준 공문서 형식으로 변환합니다',
+      'custom': '사용자 정의 프롬프트로 구조화합니다',
     },
     en: {
       'restructure': 'Improve logical flow and reorganize paragraphs',
@@ -200,6 +213,7 @@ export function getModeDescription(mode: OrganizationMode, language: 'ko' | 'en'
       'observation-record': 'Organize observation notes for teaching improvement',
       'meeting-minutes': 'Structure meeting agenda, discussions, and decisions',
       'official-document': 'Convert to standard official document format',
+      'custom': 'Organize with custom prompt',
     },
   };
 
