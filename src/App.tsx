@@ -17,6 +17,12 @@ import {
   getStoredProviderApiKey,
   getProviderMetadata,
 } from './lib/ai-config';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 function App() {
   const converter = useMarkdownConverter();
@@ -214,43 +220,69 @@ function App() {
           </div>
         </div>
 
-        {/* Features Section */}
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <Card title="지원 형식" description="다양한 문서 형식 변환 가능">
-            <ul className="space-y-2 text-sm text-black font-medium">
-              <li>✓ 웹사이트 (URL)</li>
-              <li>✓ HTML 파일</li>
-              <li>✓ PDF 문서</li>
-              <li>✓ 워드 & 파워포인트</li>
-              <li>✓ 엑셀 스프레드시트</li>
-              <li>✓ JSON, CSV, XML</li>
-              <li>✓ HWP (변환 가이드 제공)</li>
-            </ul>
-          </Card>
+        {/* Features Section - Collapsible Accordion */}
+        <div className="mt-12">
+          <Accordion type="multiple" defaultValue={["formats", "features", "benefits"]} className="space-y-4">
+            <AccordionItem value="formats" className="border-4 border-black bg-white">
+              <AccordionTrigger className="px-6 py-4 hover:bg-gray-50 transition-colors">
+                <div className="text-left">
+                  <h3 className="text-xl font-black text-black">지원 형식</h3>
+                  <p className="text-sm text-black mt-1">다양한 문서 형식 변환 가능</p>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-4">
+                <ul className="space-y-2 text-sm text-black font-medium">
+                  <li>✓ 웹사이트 (URL)</li>
+                  <li>✓ HTML 파일</li>
+                  <li>✓ PDF 문서</li>
+                  <li>✓ 워드 & 파워포인트</li>
+                  <li>✓ 엑셀 스프레드시트</li>
+                  <li>✓ JSON, CSV, XML</li>
+                  <li>✓ HWP (변환 가이드 제공)</li>
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
 
-          <Card title="주요 기능" description="TeaBoard Docs로 할 수 있는 일">
-            <ul className="space-y-2 text-sm text-black font-medium">
-              <li>✓ 클립보드 복사</li>
-              <li>✓ .md 파일 다운로드</li>
-              <li>✓ 미리보기 제공</li>
-              <li>✓ 원본 마크다운 확인</li>
-              <li>✓ 드래그 & 드롭 지원</li>
-              <li>✓ 실시간 변환</li>
-              <li>✓ AI 문서 정리 (Gemini 2.5 Flash)</li>
-            </ul>
-          </Card>
+            <AccordionItem value="features" className="border-4 border-black bg-white">
+              <AccordionTrigger className="px-6 py-4 hover:bg-gray-50 transition-colors">
+                <div className="text-left">
+                  <h3 className="text-xl font-black text-black">주요 기능</h3>
+                  <p className="text-sm text-black mt-1">TeaBoard Docs로 할 수 있는 일</p>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-4">
+                <ul className="space-y-2 text-sm text-black font-medium">
+                  <li>✓ 클립보드 복사</li>
+                  <li>✓ .md 파일 다운로드</li>
+                  <li>✓ 미리보기 제공</li>
+                  <li>✓ 원본 마크다운 확인</li>
+                  <li>✓ 드래그 & 드롭 지원</li>
+                  <li>✓ 실시간 변환</li>
+                  <li>✓ AI 문서 정리 (Gemini 2.5 Flash)</li>
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
 
-          <Card title="왜 마크다운인가요?" description="마크다운의 장점">
-            <ul className="space-y-2 text-sm text-black font-medium">
-              <li>✓ AI 친화적 형식</li>
-              <li>✓ 문서 구조 보존</li>
-              <li>✓ 텍스트 호환</li>
-              <li>✓ 버전 관리 용이</li>
-              <li>✓ 간결한 마크업</li>
-              <li>✓ 범용 문서 형식</li>
-              <li>✓ 플랫폼 독립적</li>
-            </ul>
-          </Card>
+            <AccordionItem value="benefits" className="border-4 border-black bg-white">
+              <AccordionTrigger className="px-6 py-4 hover:bg-gray-50 transition-colors">
+                <div className="text-left">
+                  <h3 className="text-xl font-black text-black">왜 마크다운인가요?</h3>
+                  <p className="text-sm text-black mt-1">마크다운의 장점</p>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-4">
+                <ul className="space-y-2 text-sm text-black font-medium">
+                  <li>✓ AI 친화적 형식</li>
+                  <li>✓ 문서 구조 보존</li>
+                  <li>✓ 텍스트 호환</li>
+                  <li>✓ 버전 관리 용이</li>
+                  <li>✓ 간결한 마크업</li>
+                  <li>✓ 범용 문서 형식</li>
+                  <li>✓ 플랫폼 독립적</li>
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </main>
 

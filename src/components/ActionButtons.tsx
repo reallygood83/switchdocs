@@ -1,5 +1,5 @@
 import { Copy, Download, RotateCcw } from 'lucide-react';
-import { Button } from './Button';
+import { Button as ShadcnButton } from './ui/button';
 import { useClipboard } from '../hooks/useClipboard';
 
 interface ActionButtonsProps {
@@ -26,33 +26,32 @@ export function ActionButtons({ markdown, filename, onReset }: ActionButtonsProp
   };
 
   return (
-    <div className="flex flex-wrap gap-2">
-      <Button
-        variant="primary"
-        size="md"
+    <div className="flex flex-wrap gap-3">
+      <ShadcnButton
         onClick={handleCopy}
-        icon={<Copy className="h-4 w-4" />}
+        className="bg-black text-white border-4 border-black hover:bg-gray-800 font-bold text-base px-6 py-6"
       >
+        <Copy className="h-5 w-5 mr-2" />
         {copied ? '복사 완료!' : '복사'}
-      </Button>
+      </ShadcnButton>
 
-      <Button
-        variant="secondary"
-        size="md"
+      <ShadcnButton
         onClick={handleDownload}
-        icon={<Download className="h-4 w-4" />}
+        variant="outline"
+        className="bg-white text-black border-4 border-black hover:bg-gray-100 font-bold text-base px-6 py-6"
       >
+        <Download className="h-5 w-5 mr-2" />
         다운로드
-      </Button>
+      </ShadcnButton>
 
-      <Button
-        variant="ghost"
-        size="md"
+      <ShadcnButton
         onClick={onReset}
-        icon={<RotateCcw className="h-4 w-4" />}
+        variant="ghost"
+        className="text-black border-2 border-transparent hover:border-black hover:bg-gray-50 font-medium text-base px-6 py-6"
       >
+        <RotateCcw className="h-5 w-5 mr-2" />
         초기화
-      </Button>
+      </ShadcnButton>
     </div>
   );
 }

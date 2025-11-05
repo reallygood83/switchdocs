@@ -142,10 +142,10 @@ export function ConverterForm({ onConvert, isLoading }: ConverterFormProps) {
             onDragLeave={handleDrag}
             onDragOver={handleDrag}
             onDrop={handleDrop}
-            className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+            className={`border-4 border-dashed p-8 text-center transition-all duration-300 ${
               dragActive
-                ? 'border-black bg-gray-50'
-                : 'border-gray-300 hover:border-black'
+                ? 'border-black bg-gray-100 scale-[1.02]'
+                : 'border-gray-400 hover:border-black hover:bg-gray-50'
             }`}
           >
             <input
@@ -156,27 +156,29 @@ export function ConverterForm({ onConvert, isLoading }: ConverterFormProps) {
               disabled={isLoading}
               className="hidden"
             />
-            <Upload className="h-8 w-8 mx-auto mb-2 text-gray-400" />
+            <Upload className={`h-12 w-12 mx-auto mb-4 transition-colors ${
+              dragActive ? 'text-black' : 'text-gray-400'
+            }`} />
             {file ? (
-              <div>
-                <p className="font-medium text-black">{file.name}</p>
-                <p className="text-sm text-gray-600 mt-1">
+              <div className="py-4">
+                <p className="font-black text-xl text-black mb-2">✅ {file.name}</p>
+                <p className="text-sm text-gray-600">
                   {(file.size / 1024).toFixed(2)} KB
                 </p>
               </div>
             ) : (
               <div>
-                <p className="font-medium text-black mb-3">
-                  파일을 여기에 드래그하거나 아래 버튼을 클릭하세요
+                <p className="font-bold text-lg text-black mb-4">
+                  {dragActive ? '📥 여기에 파일을 놓으세요!' : '📂 파일을 드래그하거나 버튼을 클릭하세요'}
                 </p>
                 <button
                   onClick={() => fileInputRef.current?.click()}
                   disabled={isLoading}
-                  className="px-6 py-3 bg-black text-white border-2 border-black rounded-none font-medium hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-8 py-4 bg-black text-white border-4 border-black font-bold text-lg hover:bg-gray-800 hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   📂 파일 선택
                 </button>
-                <p className="text-sm text-gray-600 mt-3">
+                <p className="text-sm text-gray-600 mt-4 font-medium">
                   지원 형식: {acceptFiles ? acceptFiles : '모든 파일 형식'}
                 </p>
               </div>

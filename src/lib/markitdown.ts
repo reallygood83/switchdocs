@@ -176,7 +176,7 @@ async function convertPdfToMarkdown(file: File): Promise<string> {
 
     // Extract text from each page
     const numPages = (pdf as Record<string, unknown>).numPages as number;
-    for (let pageNum = 1; pageNum <= Math.min(numPages, 50); pageNum++) {
+    for (let pageNum = 1; pageNum <= numPages; pageNum++) {
       const getPage = pdf as { getPage: (...args: unknown[]) => Promise<unknown> };
       const page = await getPage.getPage(pageNum);
       const getTextContent = page as { getTextContent: (...args: unknown[]) => Promise<unknown> };
@@ -191,9 +191,7 @@ async function convertPdfToMarkdown(file: File): Promise<string> {
       }
     }
 
-    if (numPages > 50) {
-      fullText += `\n\n*Note: Only first 50 pages shown. Total pages: ${numPages}*`;
-    }
+    // 모든 페이지 처리 완료
 
     return fullText;
   } catch (error) {
