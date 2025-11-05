@@ -22,37 +22,37 @@
 
 #### Firebase API Key
 - **Name**: `VITE_FIREBASE_API_KEY`
-- **Value**: `AIzaSyDbq2SHmIJRG0cSj9zdiNY7SzVzwbbhbSU`
+- **Value**: `your_firebase_api_key_here`
 - **Environment**: Production, Preview, Development 모두 체크
 
 #### Firebase Auth Domain
 - **Name**: `VITE_FIREBASE_AUTH_DOMAIN`
-- **Value**: `teaboarddocs.firebaseapp.com`
+- **Value**: `your-project.firebaseapp.com`
 - **Environment**: Production, Preview, Development 모두 체크
 
 #### Firebase Project ID
 - **Name**: `VITE_FIREBASE_PROJECT_ID`
-- **Value**: `teaboarddocs`
+- **Value**: `your-project-id`
 - **Environment**: Production, Preview, Development 모두 체크
 
 #### Firebase Storage Bucket
 - **Name**: `VITE_FIREBASE_STORAGE_BUCKET`
-- **Value**: `teaboarddocs.firebasestorage.app`
+- **Value**: `your-project.firebasestorage.app`
 - **Environment**: Production, Preview, Development 모두 체크
 
 #### Firebase Messaging Sender ID
 - **Name**: `VITE_FIREBASE_MESSAGING_SENDER_ID`
-- **Value**: `145071264563`
+- **Value**: `your_sender_id`
 - **Environment**: Production, Preview, Development 모두 체크
 
 #### Firebase App ID
 - **Name**: `VITE_FIREBASE_APP_ID`
-- **Value**: `1:145071264563:web:88de9861da8cf28a1ce446`
+- **Value**: `your_app_id`
 - **Environment**: Production, Preview, Development 모두 체크
 
 #### Firebase Measurement ID
 - **Name**: `VITE_FIREBASE_MEASUREMENT_ID`
-- **Value**: `G-51K214T9YM`
+- **Value**: `your_measurement_id`
 - **Environment**: Production, Preview, Development 모두 체크
 
 ### 3. 환경변수 적용
@@ -63,14 +63,16 @@
 
 ## 📝 환경변수 전체 목록 (복사용)
 
+⚠️ **중요**: 실제 값은 Firebase Console에서 확인하세요!
+
 ```
-NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyDbq2SHmIJRG0cSj9zdiNY7SzVzwbbhbSU
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=teaboarddocs.firebaseapp.com
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=teaboarddocs
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=teaboarddocs.firebasestorage.app
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=145071264563
-NEXT_PUBLIC_FIREBASE_APP_ID=1:145071264563:web:88de9861da8cf28a1ce446
-NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-51K214T9YM
+VITE_FIREBASE_API_KEY=your_firebase_api_key_here
+VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your-project-id
+VITE_FIREBASE_STORAGE_BUCKET=your-project.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
 ```
 
 ## 🔍 환경변수 확인 방법
@@ -88,14 +90,14 @@ npm run dev
 # http://localhost:3000
 
 # 브라우저 콘솔에서 확인 (개발자 도구 F12)
-console.log(process.env.NEXT_PUBLIC_FIREBASE_API_KEY)
+console.log(import.meta.env.VITE_FIREBASE_API_KEY)
 ```
 
 ## ⚠️ 주의사항
 
-### NEXT_PUBLIC_ 접두사
-- `NEXT_PUBLIC_` 접두사가 붙은 환경변수만 **브라우저에서 접근 가능**합니다
-- Firebase는 클라이언트 사이드에서 사용되므로 반드시 `NEXT_PUBLIC_` 접두사 필요
+### VITE_ 접두사
+- `VITE_` 접두사가 붙은 환경변수만 **브라우저에서 접근 가능**합니다
+- Firebase는 클라이언트 사이드에서 사용되므로 반드시 `VITE_` 접두사 필요
 - 접두사 없이 입력하면 환경변수가 작동하지 않습니다
 
 ### Production vs Preview vs Development
@@ -112,7 +114,7 @@ console.log(process.env.NEXT_PUBLIC_FIREBASE_API_KEY)
 ## 🐛 문제 해결
 
 ### 환경변수가 undefined로 나올 때
-1. 환경변수 이름이 정확한지 확인 (`NEXT_PUBLIC_` 접두사 포함)
+1. 환경변수 이름이 정확한지 확인 (`VITE_` 접두사 포함)
 2. Vercel에서 Redeploy 했는지 확인
 3. 브라우저 캐시 삭제 후 재시도
 
