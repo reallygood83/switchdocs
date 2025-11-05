@@ -80,10 +80,10 @@ function App() {
               <FileText className="h-10 w-10 text-black" />
               <div>
                 <h1 className="text-4xl font-black text-black tracking-tight">
-                  TeacherDoc AI
+                  MarkItDown
                 </h1>
                 <p className="text-black mt-1 font-medium">
-                  교사를 위한 문서 마크다운 변환 도구
+                  AI 기반 문서 변환 도구 | 9가지 형식을 마크다운으로
                 </p>
               </div>
             </div>
@@ -228,7 +228,7 @@ function App() {
             </ul>
           </Card>
 
-          <Card title="주요 기능" description="TeacherDoc AI로 할 수 있는 일">
+          <Card title="주요 기능" description="MarkItDown으로 할 수 있는 일">
             <ul className="space-y-2 text-sm text-black font-medium">
               <li>✓ 클립보드 복사</li>
               <li>✓ .md 파일 다운로드</li>
@@ -236,11 +236,11 @@ function App() {
               <li>✓ 원본 마크다운 확인</li>
               <li>✓ 드래그 & 드롭 지원</li>
               <li>✓ 실시간 변환</li>
-              <li>✓ AI 문서 정리 (Gemini)</li>
+              <li>✓ AI 문서 정리 (Gemini 2.5 Flash)</li>
             </ul>
           </Card>
 
-          <Card title="교사를 위한 도구" description="왜 마크다운인가요?">
+          <Card title="왜 마크다운인가요?" description="마크다운의 장점">
             <ul className="space-y-2 text-sm text-black font-medium">
               <li>✓ AI 친화적 형식</li>
               <li>✓ 문서 구조 보존</li>
@@ -248,7 +248,7 @@ function App() {
               <li>✓ 버전 관리 용이</li>
               <li>✓ 간결한 마크업</li>
               <li>✓ 범용 문서 형식</li>
-              <li>✓ 교육 자료 제작에 최적</li>
+              <li>✓ 플랫폼 독립적</li>
             </ul>
           </Card>
         </div>
