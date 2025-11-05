@@ -1,4 +1,5 @@
 import { FileType } from '../types/index';
+import { convertDocxToMarkdown, convertPptxToMarkdown, convertXlsxToMarkdown } from './firebase';
 
 export async function convertToMarkdown(input: string | File, sourceType: FileType): Promise<string> {
   try {
@@ -126,12 +127,18 @@ function convertHtmlToMarkdown(html: string): string {
 async function convertFileToMarkdown(file: File, sourceType: FileType): Promise<string> {
   if (sourceType === 'pdf') {
     return await convertPdfToMarkdown(file);
+  } else if (sourceType === 'csv') {
+    return await convertCsvToMarkdown(file);
+  } else if (sourceType === 'json') {
+    return await convertJsonToMarkdown(file);
+  } else if (sourceType === 'xml') {
+    return await convertXmlToMarkdown(file);
   } else if (sourceType === 'docx') {
-    return `# Word Document: ${file.name}\n\n*Note: DOCX conversion requires backend processing.*\n\nFile size: ${formatFileSize(file.size)}`;
+    return await convertDocxToMarkdown(file);
   } else if (sourceType === 'pptx') {
-    return `# PowerPoint Document: ${file.name}\n\n*Note: PPTX conversion requires backend processing.*\n\nFile size: ${formatFileSize(file.size)}`;
+    return await convertPptxToMarkdown(file);
   } else if (sourceType === 'xlsx') {
-    return `# Excel Document: ${file.name}\n\n*Note: XLSX conversion requires backend processing.*\n\nFile size: ${formatFileSize(file.size)}`;
+    return await convertXlsxToMarkdown(file);
   }
 
   throw new Error(`Unsupported file type: ${sourceType}`);
@@ -212,6 +219,138 @@ function formatFileSize(bytes: number): string {
   const sizes = ['Bytes', 'KB', 'MB', 'GB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+}
+
+async function convertCsvToMarkdown(file: File): Promise<string> {
+  try {
+    const text = await file.text();
+    const lines = text.split('\n').filter(line => line.trim());
+
+    if (lines.length === 0) {
+      return `# ${file.name}\n\n*CSV 파일이 비어있습니다.*`;
+    }
+
+    let markdown = `# ${file.name}\n\n`;
+    markdown += `**파일 크기:** ${formatFileSize(file.size)}\n`;
+    markdown += `**행 수:** ${lines.length}\n\n`;
+
+    // CSV 파싱 (간단한 구현 - 콤마로 구분)
+    const rows = lines.map(line => {
+      // 간단한 CSV 파싱: 따옴표 처리 포함
+      const cells: string[] = [];
+      let currentCell = '';
+      let inQuotes = false;
+
+      for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+
+        if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+          cells.push(currentCell.trim());
+          currentCell = '';
+        } else {
+          currentCell += char;
+        }
+      }
+      cells.push(currentCell.trim());
+
+      return cells;
+    });
+
+    // 헤더 행
+    const headers = rows[0];
+    markdown += '| ' + headers.join(' | ') + ' |\n';
+    markdown += '| ' + headers.map(() => '---').join(' | ') + ' |\n';
+
+    // 데이터 행
+    for (let i = 1; i < Math.min(rows.length, 101); i++) {
+      markdown += '| ' + rows[i].join(' | ') + ' |\n';
+    }
+
+    if (rows.length > 101) {
+      markdown += `\n\n*참고: 처음 100개 행만 표시됩니다. 전체 ${rows.length - 1}개 행 중 100개*`;
+    }
+
+    return markdown;
+  } catch (error) {
+    throw new Error(`CSV 변환 실패: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
+}
+
+async function convertJsonToMarkdown(file: File): Promise<string> {
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+
+    let markdown = `# ${file.name}\n\n`;
+    markdown += `**파일 크기:** ${formatFileSize(file.size)}\n`;
+    markdown += `**데이터 타입:** ${Array.isArray(data) ? 'Array' : typeof data}\n\n`;
+
+    // JSON을 보기 좋게 포맷팅
+    markdown += '## JSON 내용\n\n';
+    markdown += '```json\n';
+    markdown += JSON.stringify(data, null, 2);
+    markdown += '\n```\n\n';
+
+    // 배열인 경우 요약 정보 제공
+    if (Array.isArray(data)) {
+      markdown += `## 요약\n\n`;
+      markdown += `- **항목 수:** ${data.length}\n`;
+
+      if (data.length > 0 && typeof data[0] === 'object') {
+        const keys = Object.keys(data[0]);
+        markdown += `- **필드:** ${keys.join(', ')}\n`;
+      }
+    }
+
+    // 객체인 경우 주요 키 나열
+    if (typeof data === 'object' && !Array.isArray(data)) {
+      markdown += `## 구조\n\n`;
+      const keys = Object.keys(data);
+      markdown += `- **키 개수:** ${keys.length}\n`;
+      markdown += `- **주요 키:** ${keys.slice(0, 10).join(', ')}${keys.length > 10 ? '...' : ''}\n`;
+    }
+
+    return markdown;
+  } catch (error) {
+    throw new Error(`JSON 변환 실패: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
+}
+
+async function convertXmlToMarkdown(file: File): Promise<string> {
+  try {
+    const text = await file.text();
+
+    let markdown = `# ${file.name}\n\n`;
+    markdown += `**파일 크기:** ${formatFileSize(file.size)}\n\n`;
+
+    // XML을 코드 블록으로 표시
+    markdown += '## XML 내용\n\n';
+    markdown += '```xml\n';
+    markdown += text;
+    markdown += '\n```\n\n';
+
+    // 간단한 XML 파싱으로 구조 분석
+    const tagMatches = text.match(/<(\w+)[^>]*>/g);
+    if (tagMatches) {
+      const tags = new Set(tagMatches.map(tag => tag.match(/<(\w+)/)?.[1]).filter(Boolean));
+
+      markdown += '## XML 구조 분석\n\n';
+      markdown += `- **발견된 태그:** ${tags.size}개\n`;
+      markdown += `- **주요 태그:** ${Array.from(tags).slice(0, 20).join(', ')}${tags.size > 20 ? '...' : ''}\n`;
+    }
+
+    // 루트 요소 추출
+    const rootMatch = text.match(/<(\w+)[^>]*>/);
+    if (rootMatch) {
+      markdown += `- **루트 요소:** \`<${rootMatch[1]}>\`\n`;
+    }
+
+    return markdown;
+  } catch (error) {
+    throw new Error(`XML 변환 실패: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
 }
 
 export function detectFileType(filename: string): FileType {

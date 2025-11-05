@@ -28,3 +28,11 @@ dist-ssr
 .env.local
 .env.*.local
 .vercel
+
+# Firebase
+.firebase/
+.firebaserc
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.runtimeconfig.json
