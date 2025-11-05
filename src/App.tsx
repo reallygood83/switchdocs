@@ -221,8 +221,8 @@ function App() {
         </div>
 
         {/* Features Section - Collapsible Accordion */}
-        <div className="mt-12">
-          <Accordion type="multiple" defaultValue={["formats", "features", "benefits"]} className="space-y-4">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="formats" className="border-4 border-black bg-white">
               <AccordionTrigger className="px-6 py-4 hover:bg-gray-50 transition-colors">
                 <div className="text-left">
@@ -242,7 +242,9 @@ function App() {
                 </ul>
               </AccordionContent>
             </AccordionItem>
+          </Accordion>
 
+          <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="features" className="border-4 border-black bg-white">
               <AccordionTrigger className="px-6 py-4 hover:bg-gray-50 transition-colors">
                 <div className="text-left">
@@ -262,7 +264,9 @@ function App() {
                 </ul>
               </AccordionContent>
             </AccordionItem>
+          </Accordion>
 
+          <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="benefits" className="border-4 border-black bg-white">
               <AccordionTrigger className="px-6 py-4 hover:bg-gray-50 transition-colors">
                 <div className="text-left">
