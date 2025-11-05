@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Conversion Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    input[type="file"] {
+      display: block;
+      margin-bottom: 20px;
+      padding: 10px;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    #output {
+      margin-top: 20px;
+      padding: 20px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      max-height: 600px;
+      overflow-y: auto;
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .error {
+      color: #d32f2f;
+      padding: 10px;
+      background: #ffebee;
+      border: 1px solid #d32f2f;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+    .success {
+      color: #388e3c;
+      padding: 10px;
+      background: #e8f5e9;
+      border: 1px solid #388e3c;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>PDF to Markdown Converter Test</h1>
+    <input type="file" id="pdfFile" accept=".pdf">
+    <button id="convertBtn" onclick="convertPDF()" disabled>Convert PDF</button>
+    <div id="status"></div>
+    <div id="output"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.js"></script>
+  <script>
+    // Set up PDF.js worker
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.min.js';
+
+    const pdfFileInput = document.getElementById('pdfFile');
+    const convertBtn = document.getElementById('convertBtn');
+    const status = document.getElementById('status');
+    const output = document.getElementById('output');
+
+    pdfFileInput.addEventListener('change', (e) => {
+      convertBtn.disabled = !e.target.files.length;
+    });
+
+    async function convertPDF() {
+      const file = pdfFileInput.files[0];
+      if (!file) {
+        status.innerHTML = '<div class="error">Please select a PDF file</div>';
+        return;
+      }
+
+      convertBtn.disabled = true;
+      status.innerHTML = '<div class="success">Converting... This may take a moment for large PDFs.</div>';
+      output.textContent = '';
+
+      try {
+        const arrayBuffer = await file.arrayBuffer();
+        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+        let markdown = `# ${file.name}\n\n`;
+        markdown += `**Pages:** ${pdf.numPages}\n`;
+        markdown += `**File size:** ${(file.size / 1024 / 1024).toFixed(2)} MB\n\n`;
+        markdown += '---\n\n';
+
+        const pagesToExtract = Math.min(pdf.numPages, 50);
+        for (let pageNum = 1; pageNum <= pagesToExtract; pageNum++) {
+          const page = await pdf.getPage(pageNum);
+          const textContent = await page.getTextContent();
+          const text = textContent.items.map(item => item.str).join(' ');
+
+          if (text.trim()) {
+            markdown += `## Page ${pageNum}\n\n`;
+            markdown += `${text}\n\n`;
+          }
+
+          // Update status every 10 pages
+          if (pageNum % 10 === 0) {
+            status.innerHTML = `<div class="success">Extracting page ${pageNum}/${pagesToExtract}...</div>`;
+          }
+        }
+
+        if (pdf.numPages > 50) {
+          markdown += `\n\n*Note: Only first 50 pages shown. Total pages: ${pdf.numPages}*`;
+        }
+
+        output.textContent = markdown;
+        status.innerHTML = `<div class="success">✓ Conversion completed successfully! ${pdf.numPages} pages total.</div>`;
+      } catch (error) {
+        status.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+        console.error('Conversion error:', error);
+      } finally {
+        convertBtn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
