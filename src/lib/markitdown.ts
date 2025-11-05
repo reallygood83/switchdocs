@@ -1,5 +1,5 @@
 import { FileType } from '../types/index';
-import { convertDocxToMarkdown, convertPptxToMarkdown, convertXlsxToMarkdown } from './firebase';
+import { convertDocxToMarkdown, convertPptxToMarkdown, convertXlsxToMarkdown, convertHtmlToMarkdown as convertHtmlFileToMarkdown } from './firebase';
 
 export async function convertToMarkdown(input: string | File, sourceType: FileType): Promise<string> {
   try {
@@ -133,6 +133,8 @@ async function convertFileToMarkdown(file: File, sourceType: FileType): Promise<
     return await convertJsonToMarkdown(file);
   } else if (sourceType === 'xml') {
     return await convertXmlToMarkdown(file);
+  } else if (sourceType === 'html') {
+    return await convertHtmlFileToMarkdown(file);
   } else if (sourceType === 'docx') {
     return await convertDocxToMarkdown(file);
   } else if (sourceType === 'pptx') {

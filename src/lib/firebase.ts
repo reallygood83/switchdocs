@@ -68,3 +68,20 @@ export async function convertPptxToMarkdown(file: File): Promise<string> {
     throw new Error(`PPTX 변환 실패: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 }
+
+// HTML 변환 함수
+export async function convertHtmlToMarkdown(file: File): Promise<string> {
+  try {
+    const storageRef = ref(storage, `temp/${Date.now()}_${file.name}`);
+    await uploadBytes(storageRef, file);
+    const fileUrl = storageRef.fullPath;
+
+    const convertHtml = httpsCallable(functions, 'convertHtml');
+    const result = await convertHtml({ fileUrl });
+
+    return (result.data as { markdown: string }).markdown;
+  } catch (error) {
+    console.error('HTML conversion error:', error);
+    throw new Error(`HTML 변환 실패: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
+}
