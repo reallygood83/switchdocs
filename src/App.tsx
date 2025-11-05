@@ -80,10 +80,10 @@ function App() {
               <FileText className="h-10 w-10 text-black" />
               <div>
                 <h1 className="text-4xl font-black text-black tracking-tight">
-                  MarkItDown
+                  TeaBoard Docs
                 </h1>
                 <p className="text-black mt-1 font-medium">
-                  AI 기반 문서 변환 도구 | 9가지 형식을 마크다운으로
+                  교사를 위한 AI 문서 변환 도구
                 </p>
               </div>
             </div>
@@ -228,7 +228,7 @@ function App() {
             </ul>
           </Card>
 
-          <Card title="주요 기능" description="MarkItDown으로 할 수 있는 일">
+          <Card title="주요 기능" description="TeaBoard Docs로 할 수 있는 일">
             <ul className="space-y-2 text-sm text-black font-medium">
               <li>✓ 클립보드 복사</li>
               <li>✓ .md 파일 다운로드</li>

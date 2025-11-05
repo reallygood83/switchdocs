@@ -140,10 +140,10 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white border-4 border-black rounded-none shadow-xl max-w-md w-full mx-4 overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b-2 border-black">
+        <div className="flex items-center justify-between p-3 border-b-2 border-black">
           <div className="flex items-center gap-2">
-            <Key className="h-5 w-5 text-black" />
-            <h2 className="text-xl font-bold text-black uppercase tracking-wide">
+            <Key className="h-4 w-4 text-black" />
+            <h2 className="text-lg font-bold text-black uppercase tracking-wide">
               Gemini API 설정
             </h2>
           </div>
@@ -151,14 +151,14 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             onClick={onClose}
             className="text-black hover:opacity-70 transition-opacity"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-4">
-          <div className="bg-gray-50 p-4 rounded-none border-2 border-black">
-            <p className="text-sm font-medium text-black mb-1">
+        <div className="p-4 space-y-3">
+          <div className="bg-gray-50 p-3 rounded-none border-2 border-black">
+            <p className="text-xs font-medium text-black mb-1">
               🤖 Google Gemini 2.0 Flash
             </p>
             <p className="text-xs text-gray-600">
@@ -167,7 +167,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2 text-black">
+            <label className="block text-xs font-medium mb-1.5 text-black">
               Gemini API 키
             </label>
             <div className="relative">
@@ -190,22 +190,22 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             </div>
 
             {validationStatus === 'valid' && (
-              <div className="mt-2 flex items-center gap-2 text-sm text-green-600">
-                <Check className="h-4 w-4" />
+              <div className="mt-1.5 flex items-center gap-1.5 text-xs text-green-600">
+                <Check className="h-3.5 w-3.5" />
                 <span>API 키가 유효합니다</span>
               </div>
             )}
 
             {validationStatus === 'invalid' && (
-              <div className="mt-2 flex items-center gap-2 text-sm text-red-600">
-                <AlertCircle className="h-4 w-4" />
+              <div className="mt-1.5 flex items-center gap-1.5 text-xs text-red-600">
+                <AlertCircle className="h-3.5 w-3.5" />
                 <span>유효하지 않은 API 키입니다</span>
               </div>
             )}
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2 text-black">
+            <label className="block text-xs font-medium mb-1.5 text-black">
               기본 모델
             </label>
             <Input
@@ -216,7 +216,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             />
 
             {availableModels.length > 0 && (
-              <div className="mt-3 space-y-2">
+              <div className="mt-2 space-y-1.5">
                 <p className="text-xs font-medium text-gray-600">
                   감지된 모델 중에서 선택
                 </p>
@@ -242,28 +242,28 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             )}
 
             {isLoadingModels && (
-              <p className="mt-2 text-sm text-gray-600">
+              <p className="mt-1.5 text-xs text-gray-600">
                 사용 가능한 모델을 불러오는 중...
               </p>
             )}
 
             {modelError && (
-              <div className="mt-2 flex items-center gap-2 text-sm text-red-600">
-                <AlertCircle className="h-4 w-4" />
+              <div className="mt-1.5 flex items-center gap-1.5 text-xs text-red-600">
+                <AlertCircle className="h-3.5 w-3.5" />
                 <span>{modelError}</span>
               </div>
             )}
 
-            <p className="mt-2 text-xs text-gray-600">
+            <p className="mt-1.5 text-xs text-gray-600">
               이 모델이 AI 콘텐츠 생성에 기본적으로 사용됩니다.
             </p>
           </div>
 
-          <div className="bg-gray-50 p-4 rounded-none border-2 border-black">
-            <p className="text-sm font-medium text-black mb-2">
+          <div className="bg-gray-50 p-2.5 rounded-none border-2 border-black">
+            <p className="text-xs font-medium text-black mb-1.5">
               📝 API 키 발급 방법
             </p>
-            <ol className="text-sm text-gray-600 list-decimal list-inside space-y-1">
+            <ol className="text-xs text-gray-600 list-decimal list-inside space-y-0.5">
               <li>
                 <a
                   href={metadata.docsUrl || 'https://aistudio.google.com/app/apikey'}
@@ -281,25 +281,24 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             </ol>
           </div>
 
-          <div className="bg-gray-50 p-4 rounded-none border-2 border-black">
-            <p className="text-sm text-black">
+          <div className="bg-gray-50 p-2.5 rounded-none border-2 border-black">
+            <p className="text-xs text-black">
               <strong className="font-bold">🔒 개인정보 보호:</strong> API 키는 브라우저에 로컬로 저장되며 서버로 전송되지 않습니다.
             </p>
           </div>
 
-          <div className="bg-gray-50 p-4 rounded-none border-2 border-black">
-            <p className="text-sm font-medium text-black mb-2">
+          <div className="bg-gray-50 p-2.5 rounded-none border-2 border-black">
+            <p className="text-xs font-medium text-black mb-1">
               💾 파일 저장 안내
             </p>
             <p className="text-xs text-gray-600">
               변환된 마크다운 파일은 브라우저의 기본 다운로드 폴더에 저장됩니다.
-              파일명은 원본 파일명을 기반으로 자동 생성되며, 다운로드 후 원하는 위치로 이동할 수 있습니다.
             </p>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between gap-3 p-6 border-t-2 border-black">
+        <div className="flex items-center justify-between gap-2 p-3 border-t-2 border-black">
           <Button
             variant="ghost"
             onClick={handleClear}
@@ -315,7 +314,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               isLoading={isValidating}
               disabled={!apiKey.trim() || isValidating}
             >
-              검증 및 모델 불러오기
+              검증
             </Button>
 
             <Button
