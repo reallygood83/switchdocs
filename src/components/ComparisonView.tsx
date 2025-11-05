@@ -28,14 +28,50 @@ export function ComparisonView({ result, onReset, streamedContent, isStreaming }
     await copy(contentToShow);
   };
 
-  const handleDownload = () => {
-    const element = document.createElement('a');
-    const file = new Blob([contentToShow], { type: 'text/markdown' });
-    element.href = URL.createObjectURL(file);
-    element.download = `organized-${result.mode}-${Date.now()}.md`;
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
+  const handleDownload = async () => {
+    const filename = `organized-${result.mode}-${Date.now()}.md`;
+
+    try {
+      // File System Access API 지원 확인
+      if ('showSaveFilePicker' in window) {
+        // 최신 브라우저: 저장 위치 선택 대화상자 표시
+        const fileHandle = await window.showSaveFilePicker({
+          suggestedName: filename,
+          types: [
+            {
+              description: 'Markdown 파일',
+              accept: { 'text/markdown': ['.md'] },
+            },
+          ],
+        });
+
+        const writable = await fileHandle.createWritable();
+        await writable.write(contentToShow);
+        await writable.close();
+      } else {
+        // 구형 브라우저: 기본 다운로드 방식 사용
+        const element = document.createElement('a');
+        const file = new Blob([contentToShow], { type: 'text/markdown' });
+        element.href = URL.createObjectURL(file);
+        element.download = filename;
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+      }
+    } catch (error) {
+      // 사용자가 취소했거나 오류 발생 시
+      if (error instanceof Error && error.name !== 'AbortError') {
+        console.error('파일 저장 실패:', error);
+        // 폴백: 기본 다운로드 방식
+        const element = document.createElement('a');
+        const file = new Blob([contentToShow], { type: 'text/markdown' });
+        element.href = URL.createObjectURL(file);
+        element.download = filename;
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+      }
+    }
   };
 
   return (
