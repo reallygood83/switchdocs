@@ -12,6 +12,7 @@ import {
   setStoredProviderModel,
   clearStoredProviderModel,
   getProviderMetadata,
+  GEMINI_MODELS,
 } from '../lib/ai-config';
 import { AIProvider } from '../types/ai';
 import { GeminiClient } from '../lib/gemini-client';
@@ -206,38 +207,34 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 
           <div>
             <label className="block text-xs font-medium mb-1.5 text-black">
-              기본 모델
+              기본 모델 선택
             </label>
-            <Input
-              type="text"
+            <select
               value={model}
               onChange={(e) => setModel(e.target.value)}
-              placeholder={metadata.defaultModel}
-            />
+              className="w-full px-3 py-2 text-sm border-2 border-black rounded-none font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              {GEMINI_MODELS.map((modelName) => (
+                <option key={modelName} value={modelName}>
+                  {modelName}
+                </option>
+              ))}
+            </select>
+
+            <div className="mt-2 space-y-1.5">
+              <p className="text-xs font-medium text-gray-700">📋 모델 설명</p>
+              <ul className="text-xs text-gray-600 space-y-1">
+                <li><strong>gemini-2.5-flash:</strong> 빠른 응답, 일반 작업용 (권장)</li>
+                <li><strong>gemini-2.0-flash-exp:</strong> 실험적 고속 모델</li>
+                <li><strong>gemini-2.5-pro:</strong> 고품질 분석, 복잡한 작업용</li>
+              </ul>
+            </div>
 
             {availableModels.length > 0 && (
               <div className="mt-2 space-y-1.5">
-                <p className="text-xs font-medium text-gray-600">
-                  감지된 모델 중에서 선택
+                <p className="text-xs font-medium text-green-600">
+                  ✅ API 검증 완료: {availableModels.length}개 모델 사용 가능
                 </p>
-                <select
-                  value={availableModels.includes(model) ? model : ''}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value) {
-                      setModel(value);
-                    }
-                  }}
-                  className="input-field"
-                  disabled={isLoadingModels}
-                >
-                  <option value="">모델 선택</option>
-                  {availableModels.map((item) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
               </div>
             )}
 
@@ -255,7 +252,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             )}
 
             <p className="mt-1.5 text-xs text-gray-600">
-              이 모델이 AI 콘텐츠 생성에 기본적으로 사용됩니다.
+              선택한 모델이 AI 콘텐츠 생성에 기본적으로 사용됩니다.
             </p>
           </div>
 
