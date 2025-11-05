@@ -17,11 +17,22 @@ export async function convertToMarkdown(input: string | File, sourceType: FileTy
 
 async function convertUrlToMarkdown(url: string): Promise<string> {
   try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-    
-    const html = await response.text();
-    return convertHtmlToMarkdown(html);
+    // Use proxy API to avoid CORS issues
+    const response = await fetch('/api/fetch-url', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ url }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || `HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return convertHtmlToMarkdown(data.html);
   } catch (error) {
     throw new Error(`Failed to fetch URL: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
