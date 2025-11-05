@@ -166,18 +166,18 @@ export function ConverterForm({ onConvert, isLoading }: ConverterFormProps) {
               </div>
             ) : (
               <div>
-                <p className="font-medium text-black">
-                  파일을 여기에 드래그하거나{' '}
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    disabled={isLoading}
-                    className="text-black hover:underline font-bold"
-                  >
-                    파일 선택
-                  </button>
+                <p className="font-medium text-black mb-3">
+                  파일을 여기에 드래그하거나 아래 버튼을 클릭하세요
                 </p>
-                <p className="text-sm text-gray-600 mt-1">
-                  {acceptFiles ? `지원 형식: ${acceptFiles}` : '모든 파일 형식'}
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isLoading}
+                  className="px-6 py-3 bg-black text-white border-2 border-black rounded-none font-medium hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  📂 파일 선택
+                </button>
+                <p className="text-sm text-gray-600 mt-3">
+                  지원 형식: {acceptFiles ? acceptFiles : '모든 파일 형식'}
                 </p>
               </div>
             )}

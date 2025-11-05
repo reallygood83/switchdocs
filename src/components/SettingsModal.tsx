@@ -286,6 +286,16 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               <strong className="font-bold">🔒 개인정보 보호:</strong> API 키는 브라우저에 로컬로 저장되며 서버로 전송되지 않습니다.
             </p>
           </div>
+
+          <div className="bg-gray-50 p-4 rounded-none border-2 border-black">
+            <p className="text-sm font-medium text-black mb-2">
+              💾 파일 저장 안내
+            </p>
+            <p className="text-xs text-gray-600">
+              변환된 마크다운 파일은 브라우저의 기본 다운로드 폴더에 저장됩니다.
+              파일명은 원본 파일명을 기반으로 자동 생성되며, 다운로드 후 원하는 위치로 이동할 수 있습니다.
+            </p>
+          </div>
         </div>
 
         {/* Footer */}
