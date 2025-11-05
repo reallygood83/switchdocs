@@ -7,6 +7,9 @@ export default {
   ],
   theme: {
   	extend: {
+  		borderWidth: {
+  			'6': '6px',
+  		},
   		colors: {
   			primary: {
   				DEFAULT: 'hsl(var(--primary))',
