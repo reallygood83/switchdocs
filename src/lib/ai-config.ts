@@ -8,8 +8,8 @@ export const PROVIDERS: ProviderMetadata[] = [
   {
     id: 'gemini',
     label: 'Google Gemini',
-    description: 'Google Gemini 2.0 Flash 모델을 사용하여 교육 콘텐츠를 최적화합니다.',
-    defaultModel: 'gemini-2.0-flash-exp',
+    description: 'Google Gemini 2.5 Flash 모델을 사용하여 교육 콘텐츠를 최적화합니다.',
+    defaultModel: 'gemini-2.5-flash-latest',
     placeholderKey: 'AIza...',
     docsUrl: 'https://aistudio.google.com/app/apikey',
   }

@@ -84,5 +84,5 @@ export const GEMINI_STORAGE_KEYS = {
 } as const;
 
 // Default Configuration
-export const DEFAULT_GEMINI_MODEL = 'gemini-2.0-flash-exp';
+export const DEFAULT_GEMINI_MODEL = 'gemini-2.5-flash-latest';
 export const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
