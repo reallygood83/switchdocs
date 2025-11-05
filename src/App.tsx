@@ -256,15 +256,15 @@ function App() {
 
       {/* Footer */}
       <footer className="border-t-4 border-black bg-white mt-12">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col items-center gap-6">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex flex-col items-center gap-4">
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-3 justify-center">
               <a
                 href="https://www.youtube.com/@%EB%B0%B0%EC%9B%80%EC%9D%98%EB%8B%AC%EC%9D%B8-p5v"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black border-2 border-black rounded-none font-medium hover:bg-black hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white border-2 border-red-600 rounded-none font-medium hover:bg-red-700 hover:border-red-700 transition-colors"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
@@ -275,7 +275,7 @@ function App() {
                 href="https://open.kakao.com/o/gubGYQ7g"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black border-2 border-black rounded-none font-medium hover:bg-black hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-yellow-400 text-black border-2 border-yellow-400 rounded-none font-medium hover:bg-yellow-500 hover:border-yellow-500 transition-colors"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 3c5.799 0 10.5 3.664 10.5 8.185 0 4.52-4.701 8.184-10.5 8.184a13.5 13.5 0 0 1-1.727-.11l-4.408 2.883c-.501.265-.678.236-.472-.413l.892-3.678c-2.88-1.46-4.785-3.99-4.785-6.866C1.5 6.665 6.201 3 12 3zm5.907 8.06l1.47-1.424a.472.472 0 0 0-.656-.678l-1.928 1.866V9.282a.472.472 0 0 0-.944 0v2.557a.471.471 0 0 0 0 .222V13.5a.472.472 0 0 0 .944 0v-1.363l.427-.413 1.428 2.033a.472.472 0 1 0 .773-.543l-1.514-2.155zm-2.958 1.924h-1.46V9.297a.472.472 0 0 0-.943 0v4.159c0 .26.21.472.471.472h1.932a.472.472 0 1 0 0-.944zm-5.857 0h-1.46V9.297a.472.472 0 0 0-.943 0v4.159c0 .26.21.472.471.472h1.932a.472.472 0 1 0 0-.944zm-2.32-4.159a.472.472 0 0 0-.471-.472h-1.93a.472.472 0 0 0-.472.472v4.157c0 .26.211.472.472.472h1.93a.472.472 0 1 0 0-.943h-1.459v-1.24h.99a.472.472 0 1 0 0-.944h-.99v-1.03h1.459a.472.472 0 0 0 .471-.472z"/>
@@ -284,18 +284,8 @@ function App() {
               </a>
             </div>
 
-            {/* Info Text */}
-            <div className="text-center">
-              <p className="text-sm text-black font-medium">
-                Built with React, TypeScript, Tailwind CSS, and Google Gemini 2.5-flash
-              </p>
-              <p className="text-xs text-gray-600 mt-2">
-                교사를 위한 문서 변환 도구 | BYOK (Bring Your Own Key) 지원
-              </p>
-            </div>
-
             {/* Copyright */}
-            <div className="text-center pt-4 border-t-2 border-black w-full">
+            <div className="text-center pt-2 border-t-2 border-black w-full">
               <p className="text-xs text-gray-600">
                 © 2025 Moon-Jung Kim. All rights reserved.
               </p>
